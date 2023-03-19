@@ -30,7 +30,7 @@ func LoadAllLevels(gameType int, romData []byte) (int, int, [][]byte) {
 			if romData[lolo1Attr.levelBankTable+i] == 6 {
 				offset += 0x1000
 			}
-			if offset+int(romData[lolo1Attr.levelSizeTable+i]) > len(romData) { //???????
+			if offset+int(romData[lolo1Attr.levelSizeTable+i]) > len(romData) {
 				return 1, 0, nil
 			}
 			loloLevelsUncompressed[i] = decompressLevel(romData[offset:])
@@ -42,7 +42,7 @@ func LoadAllLevels(gameType int, romData []byte) (int, int, [][]byte) {
 	case N_TYPE_LOLO2:
 		for i := 0; i <= lolo2Attr.levelAmount; i++ {
 			offset := lolo2Attr.levelData + int(romData[lolo2Attr.levelPointerTable+(i*2)+1])<<8 + int(romData[lolo2Attr.levelPointerTable+(i*2)])
-			if offset+int(romData[lolo2Attr.levelSizeTable+i]) > len(romData) { //???????
+			if offset+int(romData[lolo2Attr.levelSizeTable+i]) > len(romData) {
 				return 1, 0, nil
 			}
 			loloLevelsUncompressed[i] = decompressLevel(romData[offset:])
@@ -164,7 +164,7 @@ func get16x16SpriteTSAEntry(index int, romData []byte) image.Image {
 			romData[lolo2Attr.CSPRITETSA+1+(index*4)], //sprite attributes
 			romData[lolo2Attr.levelSpritePallete:],    //nes pallete
 			true,
-		) //transparency is true
+		)
 		draw.Draw(sprite, spritehalf.Bounds(), spritehalf, image.Point{}, draw.Src)
 
 		spritehalf = get8x16SpriteBitmap(
@@ -243,7 +243,7 @@ func get8x16SpriteBitmap(patterntable0data, patterntable1data []byte, spriteinde
 	// this tells it to use pattern table 0 or 1 data depending on the tileindex, just like the nes does
 	// for 8x16 sprites
 	var vromdata []byte
-	if spriteindex&1 != 0 { //???
+	if spriteindex&1 != 0 {
 		vromdata = patterntable1data
 	} else {
 		vromdata = patterntable0data
@@ -261,12 +261,12 @@ func get8x16SpriteBitmap(patterntable0data, patterntable1data []byte, spriteinde
 			} else {
 				tempindex = spriteindex + 1
 			}
-			if spriteattributes&ATTRIB_SPRITE_VFLIP != 0 { //???
+			if spriteattributes&ATTRIB_SPRITE_VFLIP != 0 {
 				tempy = 7 - (y & 7)
 			} else {
 				tempy = (y & 7)
 			}
-			if spriteattributes&ATTRIB_SPRITE_HFLIP != 0 { //???
+			if spriteattributes&ATTRIB_SPRITE_HFLIP != 0 {
 				tempx = 7 - (x & 7)
 			} else {
 				tempx = (x & 7)

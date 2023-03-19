@@ -23,3 +23,9 @@ func PaintBorder(img *image.RGBA, col color.Color) {
 	PaintVLine(img, 0, 0, img.Rect.Dy()-1, col)
 	PaintVLine(img, img.Rect.Dx()-1, 0, img.Rect.Dy()-1, col)
 }
+
+// func NewBorder(x, y int, col color.Color) image.Image {
+// 	img := image.NewRGBA(image.Rect(0, 0, x, y))
+// 	PaintBorder(img, col)
+// 	return img
+// }
